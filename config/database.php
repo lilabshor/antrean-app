@@ -7,7 +7,7 @@ $db_name = "db_antrean";
 $db_user = "root";
 $db_pass = "";
 
-$dsn = "mysql:host=$db_host ;dbname=$db_name;charset=utf8";
+$dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8";
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
