@@ -114,4 +114,37 @@ if (empty($errors)) {
 }
 ?>
 
+<!DOCTYPE html>
 
+<html>
+    <head>
+        <style>
+/*            ini bagian front end tolong di isi ya wahai assistent ai*/
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Sistem Antrian Layanan</h1>
+                <p>Ambil nomor antrean & pilih jadwal layanan dengan mudah dan cepat</p>
+            </div>
+
+            <div class="nav-links">
+                <a href="display.php" target="_blank"> Layar display Antrean</a>
+                <a href="admin/login.php">Login petugas/admin</a>
+            </div>
+
+            <?php if (!empty($errors)):  ?>
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan</strong>
+             <ul style="margin-left: 1.2rem; margin-top: 0.4rem;">
+                 <?php foreach ($errors as $err): ?>
+                 <li><?= e($err) ?></li>
+                 <?php endforeach; ?>
+             </ul>
+            </div>
+            <?php endif; ?>
+        </div>
+    </body>
+
+</html>
