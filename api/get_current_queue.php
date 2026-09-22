@@ -47,3 +47,4 @@ try {
     error_log("API Error : " .$e->getmessage());
     json_response(["status" => "error", "message" => "terjadi kesalahan server"], 500);
 }
+?>
