@@ -126,8 +126,100 @@ unset($_SESSION["flash_msg"], $_SESSION["flash_err"]);
                             <button type="submit" class="btn-act btn-skip">Lewati</button>
                         </form>
                     </div>
+                    <?php else : ?>
+                        <div class="current-code" style="color : #64748b;">---</div>
+                        <div class="current-details">Tidak ada antrean yang sedang aktif di loket ini</div>
+
+                    <form method="POST" action="action_queue.php">
+                        <input type="hidden" name="csrf_token" value="<?= e(generate_csrf_token()) ?>">
+                        <input type="hidden" name="action" value="call_next">
+                        <?php if ($filter_service_id): ?>
+                            <input type="hidden" name="service_id" value="<?= (int)$filter_service_id ?>">
+                        <?php endif; ?>
+                        <button type="submit" class="btn-act btn-next" style="font-size : 1.1rem; padding: 1rem 2rem;">
+                            Panggil antrean berikutnya
+                        </button>
+                    </form>
+                <?php endif; ?>
             </div>
+
+        <div class="stat-card">
+            <div style="font-weight: bold; color: #cbd5e1;">Statistik hari ini (<?= format_indo_date($today) ?>)</div>
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div class="stat-val" style="color: #38bdf8;" ><?= $stats["total"] ?></div>
+                    <div class="stat-lbl">total antrean</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-val" style="color : #fbbf24;"> <?= $stats["waiting"] ?></div>
+                    <div class="stat-lbl"> menunggu</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-val" style="color : #34d399;"><?= $stats["served"] ?></div>
+                    <div class="stat-lbl">Selesai</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-val" style="color : #f87171;"><?= $stats["skipped"] ?></div>
+                    <div class="stat-lbl">Dilewatkan</div>
+                </div>
+            </div>
+
+        </div>
     </div>
+    <!-- Tabel Daftar Antrean -->
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Daftar Antrean Hari Ini</h3>
+            <form method="GET" action="dashboard.php">
+                <select name="service_id" onchange="this.form.submit()" style="background:#0f172a; color:#f8fafc; border:1px solid #334155;">
+                    <option value="">Semua Layanan</option>
+                    <?php foreach ($services as $s): ?>
+                        <option value="<?= (int)$s["id"] ?>" <?= $filter_service_id === (int)$s["id"] ? "selected" : "" ?>>
+                            <?= e($s["name"]) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>No. Antrean</th>
+            <Th>Nama pengunjung</Th>
+            <th>Layanan</th>
+            <th>slot waktu</th>
+            <th>status</th>
+            <th>LOket</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php if (empty($all_queues)) : ?>
+            <tr>
+                <td colspan="6" style="text-align : center; color: #64748b; padding: 2rem;">belum ada dta antrean hari ini</td>
+            </tr>
+            <?php else: ?>
+                <?php foreach ($all_queues as $row): ?>
+                    <tr>
+                        <td style="font-weight : bold; color: #38bdf8;"><?= e($row["queue_code"]) ?></td>
+                        <td><?= e($row["customer_name"]) ?></td>
+                        <td><?= e($row["service_name"]) ?></td>
+                        <td><?= e($row["time_slot"]) ?></td>
+                        <td>
+                            <span class="badge badge- <?= strtolower($row["status"]) ?>">
+                                <?= e($row["status"]) ?>
+                            </span>
+                        </td>
+                        <td><?= $row["counter_called"] ? "loket" . (int)$row["counter_called"] : "-" ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
