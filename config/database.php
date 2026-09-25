@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+date_default_timezone_set('Asia/Jakarta');
+
 $db_host = "localhost";
 $db_name = "db_antrean";
 $db_user = "root";

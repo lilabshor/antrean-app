@@ -7,7 +7,7 @@ function start_secure_session(): void
     if (session_status() === PHP_SESSION_NONE) {
         $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['SERVER_PORT'] ?? 80) == 443;
 
-        session_set_cookie_params ([
+        session_set_cookie_params([
             "lifetime" => 0,
             "path" => "/",
             "domain" => "",
@@ -18,12 +18,13 @@ function start_secure_session(): void
         session_start();
     }
 }
-function  e(?string $string) : string
+
+function e(?string $string): string
 {
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-function  generate_csrf_token(): string
+function generate_csrf_token(): string
 {
     start_secure_session();
     if (empty($_SESSION['csrf_token'])) {
@@ -32,14 +33,13 @@ function  generate_csrf_token(): string
     return $_SESSION['csrf_token'];
 }
 
-function  verify_csrf_token(string $csrf_token): bool
+function verify_csrf_token(string $csrf_token): bool
 {
     start_secure_session();
-    if (empty($_SESSION['csrf_token']) || empty($token)) {
+    if (empty($_SESSION['csrf_token']) || empty($csrf_token)) {
         return false;
     }
-    return hash_equals($_SESSION['csrf_token'], $token);
-
+    return hash_equals($_SESSION['csrf_token'], $csrf_token);
 }
 
 function json_response(array $data, int $status_code = 200): void
@@ -62,11 +62,11 @@ function get_available_time_slots(): array
     ];
 }
 
-function  format_indo_date(string $date_str): string
+function format_indo_date(string $date_str): string
 {
     $bulan = [
-        1 => 'Januari', "Februari", "Maret", "April", "Mei", "Juni",
-            "judl", "Agustus", "september", "oktober", "November", "Desember",
+        1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
     ];
 
     $timestamp = strtotime($date_str);
@@ -77,5 +77,4 @@ function  format_indo_date(string $date_str): string
     $y = date("Y", $timestamp);
 
     return $d . " " . $bulan[$m] . " " . $y;
-
 }
