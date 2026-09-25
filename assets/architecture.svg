@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b14"/>
+      <stop offset="50%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#050811"/>
+    </linearGradient>
+
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-card" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#00f2fe" flood-opacity="0.15"/>
+    </filter>
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#f59e0b" flood-opacity="0.2"/>
+    </filter>
+    
+    <style>
+      @keyframes pulsePath {
+        0% { stroke-dashoffset: 100; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      .anim-flow {
+        stroke-dasharray: 8 6;
+        animation: pulsePath 2.5s linear infinite;
+      }
+      .anim-pulse {
+        animation: pulseGlow 2s ease-in-out infinite;
+      }
+      text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      .code-font {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="640" fill="url(#bg-grad)"/>
+  
+  <!-- Grid Overlay -->
+  <g opacity="0.15">
+    <path d="M0,70 H1200 M0,140 H1200 M0,210 H1200 M0,280 H1200 M0,350 H1200 M0,420 H1200 M0,490 H1200 M0,560 H1200" stroke="#38bdf8" stroke-width="0.5"/>
+    <path d="M100,0 V640 M200,0 V640 M300,0 V640 M400,0 V640 M500,0 V640 M600,0 V640 M700,0 V640 M800,0 V640 M900,0 V640 M1000,0 V640 M1100,0 V640" stroke="#38bdf8" stroke-width="0.5"/>
+  </g>
+
+  <!-- Header Section -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="165" height="24" rx="12" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" stroke-width="1"/>
+    <circle cx="12" cy="12" r="4" fill="#38bdf8" class="anim-pulse"/>
+    <text x="24" y="16" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="1">ARCHIFY • RUNTIME MAP</text>
+
+    <text x="0" y="55" fill="#ffffff" font-size="24" font-weight="800" letter-spacing="-0.5">Queue Reservation &amp; Voice Display • Architecture</text>
+    <text x="0" y="76" fill="#94a3b8" font-size="13">Pessimistic Concurrency Locking (FOR UPDATE) • Pure PDO Prepared Statements • Web Speech API</text>
+  </g>
+
+  <!-- Meta Badges -->
+  <g transform="translate(920, 40)">
+    <rect x="0" y="0" width="220" height="42" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="15" y="18" fill="#64748b" font-size="10" font-weight="600">TRANSACTION ACID STATE</text>
+    <text x="15" y="33" fill="#10b981" font-size="12" font-weight="700">● Concurrency Safe • PASS</text>
+  </g>
+
+  <!-- Zones -->
+  <rect x="50" y="145" width="260" height="440" rx="12" fill="#0f172a" fill-opacity="0.6" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <text x="70" y="175" fill="#64748b" font-size="11" font-weight="700" letter-spacing="1.5">01 / CLIENT &amp; PUBLIC DISPLAY</text>
+
+  <rect x="340" y="145" width="460" height="440" rx="12" fill="#0f172a" stroke="#0284c7" stroke-dasharray="4 4" stroke-width="1.5" fill-opacity="0.4"/>
+  <text x="360" y="175" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="1.5">02 / BACKEND &amp; CONCURRENCY ENGINE</text>
+
+  <rect x="830" y="145" width="320" height="440" rx="12" fill="#0f172a" fill-opacity="0.6" stroke="#8b5cf6" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <text x="850" y="175" fill="#a78bfa" font-size="11" font-weight="700" letter-spacing="1.5">03 / INNODB REPOSITORY</text>
+
+  <!-- Animated Paths -->
+  <path d="M 280 240 L 370 240" fill="none" stroke="#38bdf8" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 540 240 L 610 240" fill="none" stroke="#38bdf8" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 770 240 L 860 240" fill="none" stroke="#10b981" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 280 375 L 370 375" fill="none" stroke="#8b5cf6" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 540 375 L 860 375" fill="none" stroke="#8b5cf6" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 280 500 L 370 500" fill="none" stroke="#f59e0b" stroke-width="2.5" class="anim-flow"/>
+  <path d="M 540 500 L 685 500 L 685 305" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Node 1: Visitor -->
+  <g transform="translate(70, 200)">
+    <rect width="210" height="85" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" filter="url(#glow-card)"/>
+    <circle cx="25" cy="26" r="6" fill="#38bdf8"/>
+    <text x="40" y="30" fill="#ffffff" font-size="13" font-weight="700">Visitor Reservation</text>
+    <text x="40" y="48" fill="#94a3b8" font-size="11" class="code-font">index.php / ticket.php</text>
+    <rect x="40" y="56" width="145" height="15" rx="3" fill="#0284c7" fill-opacity="0.2"/>
+    <text x="45" y="67" fill="#38bdf8" font-size="9" font-weight="600">Atomic Booking + CSRF</text>
+  </g>
+
+  <!-- Node 2: Display -->
+  <g transform="translate(70, 335)">
+    <rect width="210" height="85" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="25" cy="26" r="6" fill="#a78bfa"/>
+    <text x="40" y="30" fill="#ffffff" font-size="13" font-weight="700">TV Monitor Display</text>
+    <text x="40" y="48" fill="#94a3b8" font-size="11" class="code-font">display.php (Fullscreen)</text>
+    <rect x="40" y="56" width="150" height="15" rx="3" fill="#8b5cf6" fill-opacity="0.2"/>
+    <text x="45" y="67" fill="#c084fc" font-size="9" font-weight="600">3s Polling + Web Speech API</text>
+  </g>
+
+  <!-- Node 3: Staff -->
+  <g transform="translate(70, 465)">
+    <rect width="210" height="80" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" filter="url(#glow-amber)"/>
+    <circle cx="25" cy="25" r="5" fill="#f59e0b"/>
+    <text x="40" y="29" fill="#ffffff" font-size="13" font-weight="700">Staff Counter Panel</text>
+    <text x="40" y="46" fill="#94a3b8" font-size="11" class="code-font">admin/dashboard.php</text>
+    <rect x="40" y="54" width="145" height="14" rx="3" fill="#d97706" fill-opacity="0.2"/>
+    <text x="45" y="64" fill="#fbbf24" font-size="9" font-weight="600">Call • Recall • Served • Skip</text>
+  </g>
+
+  <!-- Node 4: Booking Handler -->
+  <g transform="translate(370, 200)">
+    <rect width="170" height="85" rx="8" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="15" y="26" fill="#38bdf8" font-size="10" font-weight="700" letter-spacing="1">HANDLER</text>
+    <text x="15" y="46" fill="#ffffff" font-size="13" font-weight="700">Quota &amp; Ticket Lock</text>
+    <text x="15" y="64" fill="#94a3b8" font-size="11" class="code-font">beginTransaction()</text>
+    <text x="15" y="78" fill="#64748b" font-size="10">Validate Quota per Slot</text>
+  </g>
+
+  <!-- Node 5: Pessimistic Engine -->
+  <g transform="translate(610, 195)">
+    <rect width="165" height="105" rx="8" fill="#082f49" stroke="#38bdf8" stroke-width="1.8" filter="url(#glow-cyan)"/>
+    <text x="15" y="24" fill="#38bdf8" font-size="9" font-weight="800" letter-spacing="1">CONCURRENCY &amp; LOCK</text>
+    <text x="15" y="43" fill="#ffffff" font-size="13" font-weight="700">Pessimistic Engine</text>
+    <text x="15" y="61" fill="#7dd3fc" font-size="10">• SELECT ... FOR UPDATE</text>
+    <text x="15" y="75" fill="#7dd3fc" font-size="10">• Anti-Race Condition</text>
+    <text x="15" y="89" fill="#7dd3fc" font-size="10">• CSRF &amp; PDO Pure Native</text>
+  </g>
+
+  <!-- Node 6: JSON Endpoint -->
+  <g transform="translate(370, 335)">
+    <rect width="170" height="85" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="15" y="26" fill="#a78bfa" font-size="10" font-weight="700" letter-spacing="1">REST ENDPOINT</text>
+    <text x="15" y="46" fill="#ffffff" font-size="13" font-weight="700">Real-Time Polling</text>
+    <text x="15" y="64" fill="#94a3b8" font-size="11" class="code-font">get_current_queue.php</text>
+    <text x="15" y="78" fill="#64748b" font-size="10">Delivers CALLING &amp; WAITING</text>
+  </g>
+
+  <!-- Node 7: Queue Mutator -->
+  <g transform="translate(370, 465)">
+    <rect width="170" height="80" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="15" y="26" fill="#fbbf24" font-size="10" font-weight="700" letter-spacing="1">ACTION MUTATOR</text>
+    <text x="15" y="46" fill="#ffffff" font-size="13" font-weight="700">Queue State Engine</text>
+    <text x="15" y="64" fill="#94a3b8" font-size="11" class="code-font">action_queue.php</text>
+  </g>
+
+  <!-- Node 8: MySQL InnoDB -->
+  <g transform="translate(860, 195)">
+    <rect width="260" height="150" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="260" height="28" rx="8" fill="#064e3b" fill-opacity="0.6"/>
+    <text x="15" y="19" fill="#34d399" font-size="12" font-weight="700">TABLE: queues (InnoDB)</text>
+    <text x="15" y="46" fill="#cbd5e1" font-size="11" class="code-font">PK: id (INT AUTO_INCREMENT)</text>
+    <text x="15" y="64" fill="#cbd5e1" font-size="11" class="code-font">FK: service_id (RESTRICT)</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11" class="code-font">UQ: (service, date, number)</text>
+    <text x="15" y="100" fill="#38bdf8" font-size="11" class="code-font">IDX: (date, status)</text>
+    <text x="15" y="118" fill="#38bdf8" font-size="11" class="code-font">IDX: (service, date, slot)</text>
+    <text x="15" y="136" fill="#64748b" font-size="10">status: WAITING|CALLING|SERVED</text>
+
+    <g transform="translate(0, 165)">
+      <rect width="260" height="130" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+      <rect width="260" height="28" rx="8" fill="#4c1d95" fill-opacity="0.6"/>
+      <text x="15" y="19" fill="#c084fc" font-size="12" font-weight="700">TABLES: services &amp; users</text>
+      <text x="15" y="46" fill="#cbd5e1" font-size="11" class="code-font">services: id, code, quota_per_slot</text>
+      <text x="15" y="64" fill="#cbd5e1" font-size="11" class="code-font">users: id, username, password_hash</text>
+      <text x="15" y="82" fill="#cbd5e1" font-size="11" class="code-font">users.role: admin | staff</text>
+      <text x="15" y="100" fill="#a78bfa" font-size="10">Bcrypt Password Verification</text>
+      <text x="15" y="118" fill="#64748b" font-size="10">InnoDB Foreign Key Cascades</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(60, 605)">
+    <circle cx="5" cy="5" r="4" fill="#38bdf8"/>
+    <text x="15" y="9" fill="#94a3b8" font-size="11">Active Reservation Path</text>
+    <circle cx="180" cy="5" r="4" fill="#10b981"/>
+    <text x="190" y="9" fill="#94a3b8" font-size="11">Pessimistic Lock (FOR UPDATE)</text>
+    <circle cx="410" cy="5" r="4" fill="#8b5cf6"/>
+    <text x="420" y="9" fill="#94a3b8" font-size="11">Real-Time Polling (3s)</text>
+    <circle cx="580" cy="5" r="4" fill="#f59e0b"/>
+    <text x="590" y="9" fill="#94a3b8" font-size="11">Staff Counter Action</text>
+  </g>
+</svg>
