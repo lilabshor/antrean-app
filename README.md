@@ -148,21 +148,9 @@ antrean-app/
 
    | Role | Username | Password Default | Akses / Loket |
    | :--- | :--- | :--- | :--- |
-   | **Staff Loket 1** | `staff_loket1` | `Staff@123` | Panel Operator Loket 1 |
-   | **Staff Loket 2** | `staff_loket2` | `Staff@123` | Panel Operator Loket 2 |
-   | **Administrator** | `admin` | `Admin@123` | Akses Kontrol Penuh |
-
----
-
-## 🧪 Security & Concurrency Testing Matrix
-
-| Skenario Pengujian | Metode Uji | Ekspektasi Hasil |
-| :--- | :--- | :--- |
-| **Uji Concurrency Kuota** | Kirim 10 request bersamaan pada slot sisa 1 (`ab -n 10 -c 10 ...`). | Hanya 1 request berhasil, 9 lainnya di-rollback dengan notifikasi kuota penuh (*Zero Over-Booking*). |
-| **SQL Injection Bypass** | Input payload `' OR 1=1 --` pada parameter pencarian/form. | Diproses sebagai string teks biasa berkat `PDO::ATTR_EMULATE_PREPARES => false`. |
-| **Cross-Site Scripting (XSS)** | Input `<script>alert('XSS')</script>` pada nama pengunjung. | Teks diubah aman menjadi entitas `&lt;script&gt;` via helper `e()`. |
-| **Eksploitasi CSRF** | Submit POST form dari domain eksternal tanpa token sesi. | Ditolak otomatis oleh verifikasi `verify_csrf_token()`. |
-| **Session Fixation Defense** | Inspect session ID sebelum dan sesudah proses login petugas. | ID sesi berubah berkat eksekusi `session_regenerate_id(true)`. |
+   | **Staff Loket 1** | `staff_loket1` | `password` | Panel Operator Loket 1 |
+   | **Staff Loket 2** | `staff_loket2` | `password` | Panel Operator Loket 2 |
+   | **Administrator** | `admin` | `password` | Akses Kontrol Penuh |
 
 ---
 
