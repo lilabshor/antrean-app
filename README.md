@@ -36,19 +36,21 @@
 
 Dalam skenario reservasi antrean dengan kuota terbatas, pengiriman request secara bersamaan dapat menyebabkan kondisi *race condition* (over-quota). Sistem ini menerapkan **Pessimistic Locking**:
 
+```text
 [ Incoming Reservation ]
-│
-▼
+          │
+          ▼
 $pdo->beginTransaction();
-│
-├─► 1. SELECT * FROM services WHERE id = ? FOR UPDATE;
-├─► 2. SELECT COUNT(*) FROM queues WHERE ... FOR UPDATE;
-│      └─► [ Validasi Kuota: current_count < quota_per_slot ]
-├─► 3. SELECT COALESCE(MAX(queue_number), 0) + 1 FROM queues ... FOR UPDATE;
-│      └─► [ Kunci & Ambil Nomor Urut Harian Berikutnya ]
-├─► 4. INSERT INTO queues (...) VALUES (...);
-│
+          │
+          ├─► 1. SELECT * FROM services WHERE id = ? FOR UPDATE;
+          ├─► 2. SELECT COUNT(*) FROM queues WHERE ... FOR UPDATE;
+          │      └─► [ Validasi Kuota: current_count < quota_per_slot ]
+          ├─► 3. SELECT COALESCE(MAX(queue_number), 0) + 1 FROM queues ... FOR UPDATE;
+          │      └─► [ Kunci & Ambil Nomor Urut Harian Berikutnya ]
+          ├─► 4. INSERT INTO queues (...) VALUES (...);
+          │
 $pdo->commit();  ──► [ Kunci Baris Database Dilepas ]
+```
 
 ---
 
@@ -96,33 +98,73 @@ antrean-app/
 ├── ticket.php                    # Lembar bukti cetak nomor antrean pengunjung
 ├── display.php                   # Layar monitor TV publik ruang tunggu & audio speech
 └── README.md                     # Dokumentasi komprehensif proyek
+```
 
+---
 
-🛠️ Tech Stack & Requirements
-Backend: PHP 8.0+ (PDO MySQL Extension)
+## 🛠️ Tech Stack & Requirements
 
-Database: MySQL 8.0+ / MariaDB 10.4+ (InnoDB Engine)
+* **Backend:** PHP 8.0+ (PDO MySQL Extension)
+* **Database:** MySQL 8.0+ / MariaDB 10.4+ (InnoDB Engine)
+* **Frontend:** Vanilla JavaScript (ES6+ Fetch API, Web Speech API), HTML5, CSS3 Media Print
+* **Web Server:** Apache / Nginx / PHP Built-in Server
 
-Frontend: Vanilla JavaScript (ES6+ Fetch API, Web Speech API), HTML5, CSS3 Media Print
+---
 
-Web Server: Apache / Nginx / PHP Built-in Server
+## 🚀 Quick Setup & Installation
 
-🚀 Quick Setup & Installation
+1. **Clone Repositori:**
+   ```bash
+   git clone https://github.com/lilabshor/antrean-app.git
+   cd antrean-app
+   ```
 
-git clone [https://github.com/punyacharlie236-ui/sistem-antrean-php.git](https://github.com/punyacharlie236-ui/sistem-antrean-php.git)
-cd sistem-antrean-php
+2. **Setup Database:**
+   * Buat database baru bernama `db_antrean` di MySQL / phpMyAdmin.
+   * Impor file `schema.sql`:
+     ```bash
+     mysql -u root -p db_antrean < schema.sql
+     ```
 
-Setup Database:
+3. **Konfigurasi Database (`config/database.php`):**
+   Sesuaikan kredensial server database lokal Anda:
+   ```php
+   $db_host = '127.0.0.1';
+   $db_name = 'db_antrean';
+   $db_user = 'root';
+   $db_pass = ''; // Sesuaikan jika ada password
+   ```
 
-Buat database baru bernama db_antrean di MySQL / phpMyAdmin.
+4. **Jalankan Aplikasi:**
+   Jalankan server lokal PHP:
+   ```bash
+   php -S 127.0.0.1:8000
+   ```
 
-Impor file schema.sql:
+5. **Akses URL & Kredensial Default:**
+   * **Formulir Registrasi Publik:** `[http://127.0.0.1:8000/index.php](http://127.0.0.1:8000/index.php)`
+   * **Layar Display TV Ruang Tunggu:** `[http://127.0.0.1:8000/display.php](http://127.0.0.1:8000/display.php)`
+   * **Portal Petugas / Admin:** `[http://127.0.0.1:8000/admin/login.php](http://127.0.0.1:8000/admin/login.php)`
 
-mysql -u root -p db_antrean < schema.sql
+   | Role | Username | Password Default | Akses / Loket |
+   | :--- | :--- | :--- | :--- |
+   | **Staff Loket 1** | `staff_loket1` | `Staff@123` | Panel Operator Loket 1 |
+   | **Staff Loket 2** | `staff_loket2` | `Staff@123` | Panel Operator Loket 2 |
+   | **Administrator** | `admin` | `Admin@123` | Akses Kontrol Penuh |
 
-$db_host = '127.0.0.1';
-$db_name = 'db_antrean';
-$db_user = 'root';
-$db_pass = ''; // Sesuaikan jika ada password
+---
 
-php -S 127.0.0.1:8000
+## 🧪 Security & Concurrency Testing Matrix
+
+| Skenario Pengujian | Metode Uji | Ekspektasi Hasil |
+| :--- | :--- | :--- |
+| **Uji Concurrency Kuota** | Kirim 10 request bersamaan pada slot sisa 1 (`ab -n 10 -c 10 ...`). | Hanya 1 request berhasil, 9 lainnya di-rollback dengan notifikasi kuota penuh (*Zero Over-Booking*). |
+| **SQL Injection Bypass** | Input payload `' OR 1=1 --` pada parameter pencarian/form. | Diproses sebagai string teks biasa berkat `PDO::ATTR_EMULATE_PREPARES => false`. |
+| **Cross-Site Scripting (XSS)** | Input `<script>alert('XSS')</script>` pada nama pengunjung. | Teks diubah aman menjadi entitas `&lt;script&gt;` via helper `e()`. |
+| **Eksploitasi CSRF** | Submit POST form dari domain eksternal tanpa token sesi. | Ditolak otomatis oleh verifikasi `verify_csrf_token()`. |
+| **Session Fixation Defense** | Inspect session ID sebelum dan sesudah proses login petugas. | ID sesi berubah berkat eksekusi `session_regenerate_id(true)`. |
+
+---
+
+## 📄 License
+This project is open-source and distributed under the [MIT License](LICENSE).
